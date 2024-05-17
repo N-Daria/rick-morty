@@ -6,7 +6,7 @@
       <div class="text-block">
         <h2 class="title">{{ character.name }}</h2>
         <p class="text status">
-          <span class="status__icon"></span>
+          <span class="status__icon" :class="statusClass"></span>
           {{ character.status }} - {{ character.species }}
         </p>
       </div>
@@ -31,7 +31,13 @@ import type { CharacterState } from '../types/types'
 const props = defineProps<{ character: CharacterState }>()
 const { character } = props
 
-// get First seen
+const statusClass = {
+  alive: character.status === 'Alive',
+  dead: character.status === 'Dead',
+  unknown: character.status === 'unknown'
+}
+
+// get 1st seen
 import { fetchData } from '../utils/api'
 
 const episodeName = ref<string>('')
@@ -52,11 +58,11 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-// $character-colors: (
-//   alive: rgb(85, 204, 68),
-//   dead: red,
-//   unknown: rgb(158, 158, 158)
-// );
+$character-colors: (
+  alive: rgb(85, 204, 68),
+  dead: red,
+  unknown: rgb(158, 158, 158)
+);
 
 .card {
   color: rgb(245, 245, 245);
@@ -110,6 +116,18 @@ onMounted(() => {
     width: 0.5rem;
     margin-right: 0.375rem;
     border-radius: 50%;
+
+    &.alive {
+      background-color: map-get($character-colors, alive);
+    }
+
+    &.dead {
+      background-color: map-get($character-colors, dead);
+    }
+
+    &.unknown {
+      background-color: map-get($character-colors, unknown);
+    }
   }
 
   .text-span {
