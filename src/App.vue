@@ -1,20 +1,22 @@
 <template>
-  <h1>sfdgdgr</h1>
+  <h1 class="header">Rick and Morty characters</h1>
 
-  <div v-if="loading" class="loading">Загрузка</div>
+  <div v-if="loading" class="header">Загрузка</div>
 
-  <div v-else-if="error" class="error">{{ error }}</div>
+  <div v-else-if="error" class="header header__error">Ошибка: {{ error }}</div>
 
-  <ul v-else>
-    <li v-for="character in data?.results" :key="character.id">{{ character }}</li>
-  </ul>
+  <main v-else class="main">
+    <ul class="characters">
+      <CharacterCard v-for="character in data?.results" :key="character.id" :character />
+    </ul>
+  </main>
 </template>
-jhj
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useCardsStore } from './stores/cardsStore'
 import { storeToRefs } from 'pinia'
+import CharacterCard from './components/CharacterCard.vue'
 
 const store = useCardsStore()
 const { data, loading, error } = storeToRefs(store)
@@ -25,22 +27,38 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.loading {
+.header {
   margin: 0px;
   color: rgb(32, 35, 41);
-  border: none;
   font-weight: 900;
-  z-index: 1;
-  font-size: 5.625rem;
+  font-size: 60px;
+  margin: 50px 0;
+  text-align: center;
 }
 
-.error {
-  margin: 0px;
-  color: rgb(32, 35, 41);
-  border: none;
-  font-weight: 900;
-  z-index: 1;
-  font-size: 5.625rem;
+.header__error {
   color: red;
+}
+
+.main {
+  background: rgb(39, 43, 51);
+  padding: 1.5rem;
+}
+
+.characters {
+  width: 100%;
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 1920px;
+}
+
+@media (max-width: 40.625em) {
+  .header {
+    font-size: 3.125rem;
+  }
 }
 </style>
