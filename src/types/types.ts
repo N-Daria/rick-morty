@@ -22,3 +22,13 @@ export interface CharacterState {
   url: string
   created: string
 }
+
+export interface EpisodeState {
+  id: number
+  name: string
+  air_date: string
+  episode: string
+  characters: string[]
+  url: string
+  created: string
+}

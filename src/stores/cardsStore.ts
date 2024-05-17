@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import type { PageState } from '../types/types'
-import { getCards } from '../utils/api'
+import { fetchData } from '../utils/api'
 
 export const useCardsStore = defineStore('cards', {
   state: () => ({
-    data: null as PageState | null,
+    characters: null as PageState | null,
     loading: false,
     error: null as string | null
   }),
@@ -13,8 +13,8 @@ export const useCardsStore = defineStore('cards', {
       this.loading = true
       this.error = null
       try {
-        const response = await getCards(url)
-        this.data = response
+        const response = await fetchData(url)
+        this.characters = response
       } catch (error) {
         this.error = (error as Error).message
       } finally {

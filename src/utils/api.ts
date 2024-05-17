@@ -1,6 +1,6 @@
 const baseUrl = 'https://rickandmortyapi.com/api'
 
-export async function getCards(url: string) {
+export async function fetchData(url: string) {
   const response = await fetch(`${baseUrl}/${url}`)
 
   if (!response.ok) {

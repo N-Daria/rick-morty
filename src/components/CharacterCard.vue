@@ -18,18 +18,37 @@
 
       <div class="text-block">
         <p class="text-span">First seen in:</p>
-        <p class="text">{{ character.location.name }}</p>
+        <p class="text">{{ episodeName }}</p>
       </div>
     </div>
   </li>
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
+import { defineProps, onMounted, ref } from 'vue'
 import type { CharacterState } from '../types/types'
 
 const props = defineProps<{ character: CharacterState }>()
 const { character } = props
+
+// get First seen
+import { fetchData } from '../utils/api'
+
+const episodeName = ref<string>('')
+
+const fetchFirstEpisodeName = async (url: string) => {
+  try {
+    const response = await fetchData(url)
+    episodeName.value = response.name
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+onMounted(() => {
+  const episodeUrl = `episode/${character.episode[0].split('/').reverse()[0]}`
+  fetchFirstEpisodeName(episodeUrl)
+})
 </script>
 
 <style scoped lang="scss">

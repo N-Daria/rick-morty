@@ -7,7 +7,7 @@
 
   <main v-else class="main">
     <ul class="characters">
-      <CharacterCard v-for="character in data?.results" :key="character.id" :character />
+      <CharacterCard v-for="character in characters?.results" :key="character.id" :character />
     </ul>
   </main>
 </template>
@@ -19,7 +19,7 @@ import { storeToRefs } from 'pinia'
 import CharacterCard from './components/CharacterCard.vue'
 
 const store = useCardsStore()
-const { data, loading, error } = storeToRefs(store)
+const { characters, loading, error } = storeToRefs(store)
 
 onMounted(() => {
   store.fetchInitialData('character')
