@@ -1,11 +1,11 @@
 <template>
-  <h1 class="header">Rick and Morty characters</h1>
-
   <h1 v-if="loading" class="header">Загрузка</h1>
 
   <h1 v-else-if="error" class="header header__error">Ошибка: {{ error }}</h1>
 
   <main v-else class="main">
+    <h1 class="header">Rick and Morty characters</h1>
+
     <div class="content">
       <div class="content__info">
         <FilterCharacter />
@@ -39,10 +39,10 @@ onMounted(() => {
 <style scoped>
 .header {
   margin: 0px;
-  color: rgb(32, 35, 41);
+  color: white;
   font-weight: 900;
   font-size: 60px;
-  margin: 50px 0;
+  margin: 60px 0;
   text-align: center;
 }
 
@@ -53,6 +53,7 @@ onMounted(() => {
 .main {
   background: rgb(39, 43, 51);
   padding: 1.5rem;
+  min-height: 100vh;
 }
 
 .content {
