@@ -16,9 +16,17 @@ h1,
 h2,
 h3,
 p,
-span {
+span,
+button,
+li {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
   line-height: 1.625;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }

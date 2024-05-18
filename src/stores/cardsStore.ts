@@ -1,12 +1,14 @@
 import { defineStore } from 'pinia'
-import type { PageState } from '../types/types'
+import type { PageState, CharacterState } from '../types/types'
 import { fetchData } from '../utils/api'
 
 export const useCardsStore = defineStore('cards', {
   state: () => ({
-    characters: null as PageState | null,
+    pageStatus: null as PageState | null,
     loading: false,
-    error: null as string | null
+    error: null as string | null,
+    currentPage: 1,
+    characters: null as CharacterState[] | null
   }),
   actions: {
     async fetchInitialData(url: string) {
@@ -14,7 +16,9 @@ export const useCardsStore = defineStore('cards', {
       this.error = null
       try {
         const response = await fetchData(url)
-        this.characters = response
+        this.characters = response.results
+        this.pageStatus = response.info
+        this.currentPage = +response.info.next.split('=').reverse()[0] - 1
       } catch (error) {
         this.error = (error as Error).message
       } finally {

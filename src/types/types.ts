@@ -1,11 +1,8 @@
 export interface PageState {
-  info: {
-    count: number
-    pages: number
-    next: string
-    prev: string
-  }
-  results: CharacterState[]
+  count: number
+  pages: number
+  next: string
+  prev: string
 }
 
 export interface CharacterState {

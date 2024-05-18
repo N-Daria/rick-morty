@@ -1,14 +1,18 @@
 <template>
   <h1 class="header">Rick and Morty characters</h1>
 
-  <div v-if="loading" class="header">Загрузка</div>
+  <h1 v-if="loading" class="header">Загрузка</h1>
 
-  <div v-else-if="error" class="header header__error">Ошибка: {{ error }}</div>
+  <h1 v-else-if="error" class="header header__error">Ошибка: {{ error }}</h1>
 
   <main v-else class="main">
-    <ul class="characters">
-      <CharacterCard v-for="character in characters?.results" :key="character.id" :character />
-    </ul>
+    <div class="content">
+      <PaginationBlock />
+
+      <ul class="characters">
+        <CharacterCard v-for="character in characters" :key="character.id" :character />
+      </ul>
+    </div>
   </main>
 </template>
 
@@ -17,6 +21,7 @@ import { onMounted } from 'vue'
 import { useCardsStore } from './stores/cardsStore'
 import { storeToRefs } from 'pinia'
 import CharacterCard from './components/CharacterCard.vue'
+import PaginationBlock from './components/PaginationBlock.vue'
 
 const store = useCardsStore()
 const { characters, loading, error } = storeToRefs(store)
@@ -45,15 +50,16 @@ onMounted(() => {
   padding: 1.5rem;
 }
 
-.characters {
-  width: 100%;
+.content {
   margin: 0 auto;
+  max-width: 1920px;
+}
 
+.characters {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  max-width: 1920px;
 }
 
 @media (max-width: 40.625em) {
