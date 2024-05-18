@@ -1,6 +1,6 @@
 <template>
   <ul class="pagination">
-    <li>
+    <li v-if="totalPages !== 1">
       <button class="pagination__button" @click="newPage(1)" :disabled="currentPage === 1">
         1
       </button>
@@ -22,11 +22,11 @@
       </button>
     </li>
 
-    <li v-if="currentPage < totalPages - 1" class="pagination__button pagination__button_dots">
+    <li v-if="currentPage <= totalPages - 1" class="pagination__button pagination__button_dots">
       ...
     </li>
 
-    <li>
+    <li v-if="totalPages !== 1">
       <button
         class="pagination__button"
         @click="newPage(totalPages)"
@@ -45,12 +45,12 @@ import { computed } from 'vue'
 
 const store = useCardsStore()
 const { currentPage, pageStatus } = storeToRefs(store)
-const totalPages = computed(() => pageStatus.value?.pages - 1 ?? 0)
+const totalPages = computed(() => pageStatus.value?.pages - 1 ?? 1)
 
 // change page
 const newPage = (pageNumber: number) => {
   if (pageNumber > 0 && pageNumber <= totalPages.value) {
-    store.fetchInitialData(`character/?page=${pageNumber}`)
+    store.changePage(`character/?page=${pageNumber}`)
   }
 }
 </script>
@@ -59,7 +59,7 @@ const newPage = (pageNumber: number) => {
 .pagination {
   display: flex;
   gap: 8px;
-  margin: 50px 0;
+  margin: 0;
 
   li {
     margin: 0 5px;
@@ -76,7 +76,7 @@ const newPage = (pageNumber: number) => {
   .pagination__button {
     padding: 0.75rem;
     font-weight: 400;
-    font-size: 1.5rem;
+    font-size: 18px;
     text-align: center;
     color: rgb(245, 245, 245);
     overflow: hidden;

@@ -7,7 +7,11 @@
 
   <main v-else class="main">
     <div class="content">
-      <PaginationBlock />
+      <div class="content__info">
+        <FilterCharacter />
+
+        <PaginationBlock />
+      </div>
 
       <ul class="characters">
         <CharacterCard v-for="character in characters" :key="character.id" :character />
@@ -22,6 +26,7 @@ import { useCardsStore } from './stores/cardsStore'
 import { storeToRefs } from 'pinia'
 import CharacterCard from './components/CharacterCard.vue'
 import PaginationBlock from './components/PaginationBlock.vue'
+import FilterCharacter from './components/FilterCharacter.vue'
 
 const store = useCardsStore()
 const { characters, loading, error } = storeToRefs(store)
@@ -66,5 +71,12 @@ onMounted(() => {
   .header {
     font-size: 3.125rem;
   }
+}
+
+.content__info {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 50px 0;
 }
 </style>
