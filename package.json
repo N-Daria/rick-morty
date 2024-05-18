@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "homepage": "https://github.com/N-Daria/rick-morty.git",
+  "homepage": "https://github.com/N-Daria/rick-morty.git",
   "scripts": {
     "dev": "vite",
     "preview": "vite preview",
